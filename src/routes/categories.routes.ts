@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { authenticate, requireRole } from '../middlewares/auth.middleware';
+import { getCategories, createCategory, updateCategory, deleteCategory } from '../controllers/categories.controller';
+const r = Router();
+r.get('/', getCategories);
+r.use(authenticate);
+r.post('/', requireRole('ADMIN'), createCategory);
+r.put('/:id', requireRole('ADMIN'), updateCategory);
+r.delete('/:id', requireRole('ADMIN'), deleteCategory);
+export default r;
